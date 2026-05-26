@@ -1,0 +1,52 @@
+// CURTIDAS (APENAS 1 VEZ)
+document.querySelectorAll(".like-btn").forEach(botao => {
+
+  botao.addEventListener("click", () => {
+
+    // VERIFICA SE JÁ FOI CURTIDO
+    if (botao.classList.contains("curtido")) {
+      return;
+    }
+
+    // PEGA O NÚMERO DE CURTIDAS
+    const curtidas = botao.querySelector(".likes");
+
+    // SOMA +1
+    curtidas.textContent =
+      parseInt(curtidas.textContent) + 1;
+
+    // MARCA COMO CURTIDO
+    botao.classList.add("curtido");
+
+  });
+
+});
+// PEGA TODOS OS VÍDEOS
+const videos = document.querySelectorAll("video");
+
+// REPRODUÇÃO AUTOMÁTICA
+const observador = new IntersectionObserver((entradas) => {
+
+  entradas.forEach(entrada => {
+
+    if (entrada.isIntersecting) {
+
+      // DÁ PLAY NO VÍDEO VISÍVEL
+      entrada.target.play();
+
+    } else {
+
+      // PAUSA OS OUTROS
+      entrada.target.pause();
+
+    }
+
+  });
+
+}, { threshold: 0.7 });
+
+
+// OBSERVA TODOS OS VÍDEOS
+videos.forEach(video => {
+  observador.observe(video);
+});
